@@ -26,7 +26,7 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
 
 COPY build_version.txt /
 COPY --chmod=0755 *.sh /usr/local/bin/
-COPY --chmod=-0755 *  /app/
+COPY --chmod=0755 *  /app/
 COPY CONFIGURATION.md /opt
 # COPY /config/* /config/
 
