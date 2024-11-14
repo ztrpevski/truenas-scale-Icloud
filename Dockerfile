@@ -30,6 +30,11 @@ COPY --chmod=0755 *  /app/
 COPY CONFIGURATION.md /opt
 # COPY /config/* /config/
 
+RUN useradd -m -s /bin/bash -N -u 568 apps && \
+    echo "apps ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && \
+    chmod 0440 /etc/sudoers && \
+    chmod g+w /etc/passwd 
+
 
 # HEALTHCHECK --start-period=10s --interval=1m --timeout=10s CMD /usr/local/bin/healthcheck.sh
   
