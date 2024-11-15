@@ -39,8 +39,9 @@ RUN addgroup \
     --no-create-home \
     --uid "$UID" \
     $USER
+
 # Tell docker that all future commands should run as the appuser user
-USER apps
+USER $USER
   
 VOLUME "${config_dir}"
 
