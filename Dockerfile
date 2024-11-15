@@ -24,7 +24,7 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
    apk del --no-progress --purge build-deps
 
 # Create a group and user
-RUN addgroup -S apps -u 568 && adduser -m -s /bin/bash -N -u 568 apps && \
+RUN addgroup -S apps --uid 568 && adduser -m -s /bin/bash -N -u 568 apps && \
     echo "apps ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && \
     chmod 0440 /etc/sudoers && \
     chmod g+w /etc/passwd 
