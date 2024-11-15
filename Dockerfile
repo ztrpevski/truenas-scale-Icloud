@@ -22,21 +22,15 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Install iCloudPD latest release" && \
    deactivate && \
 echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
    apk del --no-progress --purge build-deps
-   
 
-# COPY build_version.txt /
-# COPY --chmod=0755 *.sh /usr/local/bin/
-# COPY --chmod=0755 *  /app/
-# COPY CONFIGURATION.md /opt
-# COPY /config/* /config/
+# Create a group and user
+RUN addgroup -S apps -u 568 && adduser -m -s /bin/bash -N -u 568 apps && \
+    echo "apps ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && \
+    chmod 0440 /etc/sudoers && \
+    chmod g+w /etc/passwd 
 
-# RUN useradd -m -s /bin/bash -N -u 568 apps && \
-#     echo "apps ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && \
-#     chmod 0440 /etc/sudoers && \
-#     chmod g+w /etc/passwd 
-
-
-# HEALTHCHECK --start-period=10s --interval=1m --timeout=10s CMD /usr/local/bin/healthcheck.sh
+# Tell docker that all future commands should run as the appuser user
+USER apps
   
 VOLUME "${config_dir}"
 
