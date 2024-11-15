@@ -3,8 +3,8 @@ FROM boredazfcuk/icloudpd:latest
 ENV config_dir="/config" XDG_DATA_HOME="/config" TZ="UTC"
 ENV USER=apps
 ENV GROUPNAME=$USER
-ENV UID=568
-ENV GID=568
+ENV UID=1000
+ENV GID=1000
 
 ARG icloudpd_version="latest"
 ARG python_version="3.11"
