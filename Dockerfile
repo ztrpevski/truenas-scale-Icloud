@@ -1,6 +1,10 @@
 FROM boredazfcuk/icloudpd:latest
 
 ENV config_dir="/config" XDG_DATA_HOME="/config" TZ="UTC"
+ENV USER=apps
+ENV GROUPNAME=$USER
+ENV UID=568
+ENV GID=568
 
 ARG icloudpd_version="latest"
 ARG python_version="3.11"
@@ -23,12 +27,18 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Install iCloudPD latest release" && \
 echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
    apk del --no-progress --purge build-deps
 
-# Create a group and user
-RUN addgroup -S apps --uid 568 && adduser -m -s /bin/bash -N -u 568 apps && \
-    echo "apps ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers && \
-    chmod 0440 /etc/sudoers && \
-    chmod g+w /etc/passwd 
 
+RUN addgroup \
+    --gid "$GID" \
+    "$GROUPNAME" \
+&&  adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup "$GROUPNAME" \
+    --no-create-home \
+    --uid "$UID" \
+    $USER
 # Tell docker that all future commands should run as the appuser user
 USER apps
   
