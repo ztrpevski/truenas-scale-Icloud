@@ -41,7 +41,7 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
 #     $USER
 
 # Tell docker that all future commands should run as the appuser user
-USER $USER
+# USER $USER
   
 VOLUME "${config_dir}"
 
