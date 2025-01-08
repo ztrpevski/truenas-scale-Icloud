@@ -28,17 +28,17 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
    apk del --no-progress --purge build-deps
 
 
-RUN addgroup \
-    --gid "$GID" \
-    "$GROUPNAME" \
-&&  adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "$(pwd)" \
-    --ingroup "$GROUPNAME" \
-    --no-create-home \
-    --uid "$UID" \
-    $USER
+# RUN addgroup \
+#     --gid "$GID" \
+#     "$GROUPNAME" \
+# &&  adduser \
+#     --disabled-password \
+#     --gecos "" \
+#     --home "$(pwd)" \
+#     --ingroup "$GROUPNAME" \
+#     --no-create-home \
+#     --uid "$UID" \
+#     $USER
 
 # Tell docker that all future commands should run as the appuser user
 USER $USER
