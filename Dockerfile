@@ -28,6 +28,7 @@ echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
    apk del --no-progress --purge build-deps
 
 RUN mkdir /tmp/icloudpd
+RUN chmod -R 777 /tmp/icloudpd
 # RUN addgroup \
 #     --gid "$GID" \
 #     "$GROUPNAME" \
