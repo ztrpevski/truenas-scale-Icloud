@@ -1,34 +1,34 @@
 FROM boredazfcuk/icloudpd:latest
 
-ENV config_dir="/config" XDG_DATA_HOME="/config" TZ="UTC"
+ENV XDG_DATA_HOME="/config" TZ="UTC" ENV="/etc/profile" config_file="/config/icloudpd.conf"
 ENV USER=apps
 ENV GROUPNAME=$USER
 ENV UID=568
 ENV GID=568
 
 ARG icloudpd_version="latest"
-ARG python_version="3.11"
-ARG build_dependencies="git gcc python3-dev musl-dev rust cargo libffi-dev openssl-dev"
-ARG app_dependencies="py3-pip exiftool coreutils tzdata curl imagemagick shadow jq libheif jpeg bind-tools traceroute"
-ARG fix_repo="boredazfcuk/icloud_photos_downloader"
+ARG build_dependencies="gcc python3-dev libc-dev libffi-dev cargo openssl-dev"
+ARG app_dependencies="findutils nano nano-syntax py3-pip exiftool coreutils tzdata curl libheif imagemagick shadow jq jpeg bind-tools expect inotify-tools msmtp"
 
 RUN echo "$(date '+%d/%m/%Y - %H:%M:%S') | ***** Build started for boredazfcuk's docker-icloudpd *****" && \
-echo "$(date '+%d/%m/%Y - %H:%M:%S') | Install build dependencies" && \
-  apk add --no-progress --no-cache --virtual=build-deps ${build_dependencies} && \
 echo "$(date '+%d/%m/%Y - %H:%M:%S') | Install requirements" && \
+   apk add --no-progress --no-cache --virtual build ${build_dependencies} && \
    apk add --no-progress --no-cache ${app_dependencies} && \
+   find /usr/share/nano -name '*.nanorc' -printf "include %p\n" >>/etc/nanorc && \
 echo "$(date '+%d/%m/%Y - %H:%M:%S') | Install iCloudPD latest release" && \
-   python -m venv /opt/icloudpd_latest && \
-   source /opt/icloudpd_latest/bin/activate && \
+   python -m venv /opt/icloudpd && \
+   source /opt/icloudpd/bin/activate && \
    pip3 install --upgrade pip && \
-   pip3 install --no-cache-dir wheel && \
    pip3 install --no-cache-dir icloudpd && \
    deactivate && \
-echo "$(date '+%d/%m/%Y - %H:%M:%S') | Clean up" && \
-   apk del --no-progress --purge build-deps
+   apk del build
 
-RUN mkdir /tmp/icloudpd
-RUN chmod -R 777 /tmp/icloudpd
+COPY build_version.txt /opt
+COPY --chmod=0755 *.sh /usr/local/bin/
+COPY authenticate.exp /opt/authenticate.exp
+COPY CONFIGURATION.md /opt
+COPY profile /etc/profile   
+
 # RUN addgroup \
 #     --gid "$GID" \
 #     "$GROUPNAME" \
@@ -44,6 +44,6 @@ RUN chmod -R 777 /tmp/icloudpd
 # Tell docker that all future commands should run as the appuser user
 # USER $USER
   
-VOLUME "${config_dir}"
+VOLUME "/config"
 
-CMD /usr/local/bin/sync-icloud.sh 
+CMD /usr/local/bin/launcher.sh
