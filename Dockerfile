@@ -46,4 +46,4 @@ COPY profile /etc/profile
   
 VOLUME "/config"
 
-CMD /usr/local/bin/launcher.sh &
+CMD /usr/local/bin/launcher.sh
