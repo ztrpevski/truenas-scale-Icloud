@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM boredazfcuk/icloudpd:latest
 
 ENV XDG_DATA_HOME="/config" TZ="UTC" ENV="/etc/profile" config_file="/config/icloudpd.conf"
 ENV USER=apps
