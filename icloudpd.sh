@@ -8,3 +8,4 @@ echo "icloudpd path: $(which icloudpd)"
 
 # Replace this with your real sync command
 ./usr/local/bin/launcher.sh &
+sleep 5
