@@ -7,4 +7,4 @@ echo "icloudpd path: $(which icloudpd)"
 icloudpd --version
 
 # Replace this with your real sync command
-exec icloudpd 
+exec icloudpd &
