@@ -2,8 +2,8 @@
 FROM boredazfcuk/icloudpd:latest
 
 # Optionally copy custom entrypoint or scripts
-COPY icloudpd.sh /icloudpd.sh
-RUN chmod +x /icloudpd.sh
+COPY icloudpd.sh /icloudpd_start.sh
+RUN chmod +x /icloudpd_start.sh
 
 # Optional: Set environment variables (or override via TrueNAS GUI)
 ENV TZ="UTC"
@@ -12,4 +12,4 @@ ENV TZ="UTC"
 # EXPOSE 8080
 
 # Define entrypoint
-ENTRYPOINT ["/icloudpd.sh"]
+ENTRYPOINT ["/icloudpd_start.sh"]
