@@ -1,5 +1,4 @@
 #!/bin/sh
-
 #export PATH=$PATH:/opt/icloudpd/bin/
 
 # Just to confirm it's working
