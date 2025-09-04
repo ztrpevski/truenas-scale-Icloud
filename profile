@@ -84,4 +84,3 @@ __setprompt
 PROMPT_COMMAND='echo -ne "\e]0;$USER@${HOSTNAME}: $(pwd -P)\a"'
 
 unset script dl_path
-
